@@ -105,9 +105,8 @@ spec:
                     items:
                       properties:
                         location:
-                          description: Specifies the supported Azure location where
-                            the resource exists. Changing this forces a new resource
-                            to be created.
+                          description: A location where the container registry should
+                            be geo-replicated.
                           type: string
                         regionalEndpointEnabled:
                           description: Whether regional endpoint is enabled for this
@@ -116,7 +115,8 @@ spec:
                         tags:
                           additionalProperties:
                             type: string
-                          description: A mapping of tags to assign to the resource.
+                          description: A mapping of tags to assign to this replication
+                            location.
                           type: object
                         zoneRedundancyEnabled:
                           description: Whether zone redundancy is enabled for this

@@ -73,6 +73,11 @@ spec:
                           description: The number of compute units in this region.
                             Defaults to the capacity of the main region.
                           type: number
+                        gatewayDisabled:
+                          description: Only valid for an Api Management service deployed
+                            in multiple locations. This can be used to disable the
+                            gateway in this additional location.
+                          type: boolean
                         location:
                           description: The name of the Azure Region in which the API
                             Management Service should be expanded to.
@@ -869,6 +874,12 @@ spec:
                             below.
                           items:
                             properties:
+                              certificateSource:
+                                description: The source of the certificate.
+                                type: string
+                              certificateStatus:
+                                description: The status of the certificate.
+                                type: string
                               expiry:
                                 description: 'The expiration date of the certificate
                                   in RFC3339 format: 2000-01-02T03:04:05Z.'
@@ -904,6 +915,12 @@ spec:
                             below.
                           items:
                             properties:
+                              certificateSource:
+                                description: The source of the certificate.
+                                type: string
+                              certificateStatus:
+                                description: The status of the certificate.
+                                type: string
                               expiry:
                                 description: 'The expiration date of the certificate
                                   in RFC3339 format: 2000-01-02T03:04:05Z.'
@@ -938,6 +955,12 @@ spec:
                           description: One or more portal blocks as documented below.
                           items:
                             properties:
+                              certificateSource:
+                                description: The source of the certificate.
+                                type: string
+                              certificateStatus:
+                                description: The status of the certificate.
+                                type: string
                               expiry:
                                 description: 'The expiration date of the certificate
                                   in RFC3339 format: 2000-01-02T03:04:05Z.'
@@ -972,6 +995,12 @@ spec:
                           description: One or more proxy blocks as documented below.
                           items:
                             properties:
+                              certificateSource:
+                                description: The source of the certificate.
+                                type: string
+                              certificateStatus:
+                                description: The status of the certificate.
+                                type: string
                               defaultSslBinding:
                                 description: Is the certificate associated with this
                                   Hostname the Default SSL Certificate? This is used
@@ -1012,6 +1041,12 @@ spec:
                           description: One or more scm blocks as documented below.
                           items:
                             properties:
+                              certificateSource:
+                                description: The source of the certificate.
+                                type: string
+                              certificateStatus:
+                                description: The status of the certificate.
+                                type: string
                               expiry:
                                 description: 'The expiration date of the certificate
                                   in RFC3339 format: 2000-01-02T03:04:05Z.'

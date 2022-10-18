@@ -64,6 +64,38 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  customNetworkInterfaceName:
+                    description: The custom name of the network interface attached
+                      to the private endpoint. Changing this forces a new resource
+                      to be created.
+                    type: string
+                  ipConfiguration:
+                    description: An ip_configuration block as defined below. This
+                      allows a static IP address to be set for this Private Endpoint,
+                      otherwise an address is dynamically allocated from the Subnet.
+                      At most one IP configuration is allowed. Changing this forces
+                      a new resource to be created.
+                    items:
+                      properties:
+                        name:
+                          description: The Name of the IP Configuration.
+                          type: string
+                        privateIpAddress:
+                          description: The static IP address set by this configuration.
+                            It is recommended to use the private IP address exported
+                            in the private_service_connection block to obtain the
+                            address associated with the private endpoint.
+                          type: string
+                        subresourceName:
+                          description: The subresource this IP address applies to,
+                            which corresponds to the group_id.
+                          type: string
+                      required:
+                      - name
+                      - privateIpAddress
+                      - subresourceName
+                      type: object
+                    type: array
                   location:
                     description: The supported Azure location where the resource exists.
                       Changing this forces a new resource to be created.

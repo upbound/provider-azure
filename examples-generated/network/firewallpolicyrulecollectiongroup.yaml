@@ -14,7 +14,7 @@ spec:
       priority: 500
       rule:
       - destinationFqdns:
-        - .microsoft.com
+        - '*.microsoft.com'
         name: app_rule_collection1_rule1
         protocols:
         - port: 80

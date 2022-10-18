@@ -143,6 +143,10 @@ type AccountParameters struct {
 	// +kubebuilder:validation:Optional
 	CustomerManagedKey []CustomerManagedKeyParameters `json:"customerManagedKey,omitempty" tf:"customer_managed_key,omitempty"`
 
+	// Default to Azure Active Directory authorization in the Azure portal when accessing the Storage Account. The default value is false
+	// +kubebuilder:validation:Optional
+	DefaultToOauthAuthentication *bool `json:"defaultToOauthAuthentication,omitempty" tf:"default_to_oauth_authentication,omitempty"`
+
 	// Specifies the Edge Zone within the Azure Region where this Storage Account should exist. Changing this forces a new Storage Account to be created.
 	// +kubebuilder:validation:Optional
 	EdgeZone *string `json:"edgeZone,omitempty" tf:"edge_zone,omitempty"`
@@ -183,6 +187,10 @@ type AccountParameters struct {
 	// Is NFSv3 protocol enabled? Changing this forces a new resource to be created. Defaults to false.
 	// +kubebuilder:validation:Optional
 	Nfsv3Enabled *bool `json:"nfsv3Enabled,omitempty" tf:"nfsv3_enabled,omitempty"`
+
+	// Whether the public network access is enabled? Defaults to true.
+	// +kubebuilder:validation:Optional
+	PublicNetworkAccessEnabled *bool `json:"publicNetworkAccessEnabled,omitempty" tf:"public_network_access_enabled,omitempty"`
 
 	// The encryption type of the queue service. Possible values are Service and Account. Changing this forces a new resource to be created. Default value is Service.
 	// +kubebuilder:validation:Optional
@@ -282,6 +290,10 @@ type BlobPropertiesParameters struct {
 	// Is the blob service properties for change feed events enabled? Default to false.
 	// +kubebuilder:validation:Optional
 	ChangeFeedEnabled *bool `json:"changeFeedEnabled,omitempty" tf:"change_feed_enabled,omitempty"`
+
+	// The duration of change feed events retention in days. The possible values are between 1 and 146000 days (400 years). Setting this to null (or omit this in the configuration file) indicates an infinite retention of the change feed.
+	// +kubebuilder:validation:Optional
+	ChangeFeedRetentionInDays *float64 `json:"changeFeedRetentionInDays,omitempty" tf:"change_feed_retention_in_days,omitempty"`
 
 	// A container_delete_retention_policy block as defined below.
 	// +kubebuilder:validation:Optional
@@ -607,6 +619,10 @@ type SMBParameters struct {
 	// A set of Kerberos ticket encryption. Possible values are RC4-HMAC, and AES-256.
 	// +kubebuilder:validation:Optional
 	KerberosTicketEncryptionType []*string `json:"kerberosTicketEncryptionType,omitempty" tf:"kerberos_ticket_encryption_type,omitempty"`
+
+	// Indicates whether multichannel is enabled. Defaults to false. This is only supported on Premium storage accounts.
+	// +kubebuilder:validation:Optional
+	MultichannelEnabled *bool `json:"multichannelEnabled,omitempty" tf:"multichannel_enabled,omitempty"`
 
 	// A set of SMB protocol versions. Possible values are SMB2.1, SMB3.0, and SMB3.1.1.
 	// +kubebuilder:validation:Optional

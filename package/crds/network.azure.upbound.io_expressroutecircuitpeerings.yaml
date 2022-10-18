@@ -142,10 +142,18 @@ spec:
                             type: string
                         type: object
                     type: object
+                  ipv4Enabled:
+                    description: A boolean value indicating whether the IPv4 peering
+                      is enabled. Defaults to true.
+                    type: boolean
                   ipv6:
                     description: A ipv6 block as defined below.
                     items:
                       properties:
+                        enabled:
+                          description: A boolean value indicating whether the IPv6
+                            peering is enabled. Defaults to true.
+                          type: boolean
                         microsoftPeering:
                           description: A microsoft_peering block as defined below.
                           items:
@@ -176,14 +184,14 @@ spec:
                           description: A subnet for the secondary link.
                           type: string
                       required:
-                      - microsoftPeering
                       - primaryPeerAddressPrefix
                       - secondaryPeerAddressPrefix
                       type: object
                     type: array
                   microsoftPeeringConfig:
                     description: A microsoft_peering_config block as defined below.
-                      Required when peering_type is set to MicrosoftPeering.
+                      Required when peering_type is set to MicrosoftPeering and config
+                      for IPv4.
                     items:
                       properties:
                         advertisedPublicPrefixes:
@@ -208,7 +216,8 @@ spec:
                       public or private.
                     type: number
                   primaryPeerAddressPrefix:
-                    description: A /30 subnet for the primary link.
+                    description: A /30 subnet for the primary link. Required when
+                      config for IPv4.
                     type: string
                   resourceGroupName:
                     description: The name of the resource group in which to create
@@ -295,7 +304,8 @@ spec:
                       is set to MicrosoftPeering.
                     type: string
                   secondaryPeerAddressPrefix:
-                    description: A /30 subnet for the secondary link.
+                    description: A /30 subnet for the secondary link. Required when
+                      config for IPv4.
                     type: string
                   sharedKeySecretRef:
                     description: The shared key. Can be a maximum of 25 characters.
@@ -318,8 +328,6 @@ spec:
                     description: A valid VLAN ID to establish this peering on.
                     type: number
                 required:
-                - primaryPeerAddressPrefix
-                - secondaryPeerAddressPrefix
                 - vlanId
                 type: object
               providerConfigRef:
@@ -502,6 +510,8 @@ spec:
                   azureAsn:
                     description: The ASN used by Azure.
                     type: number
+                  gatewayManagerEtag:
+                    type: string
                   id:
                     description: The ID of the ExpressRoute Circuit Peering.
                     type: string

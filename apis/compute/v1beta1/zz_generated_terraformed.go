@@ -614,7 +614,7 @@ func (mg *OrchestratedVirtualMachineScaleSet) GetTerraformResourceType() string 
 
 // GetConnectionDetailsMapping for this OrchestratedVirtualMachineScaleSet
 func (tr *OrchestratedVirtualMachineScaleSet) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"extension[*].protected_settings": "spec.forProvider.extension[*].protectedSettingsSecretRef", "os_profile[*].custom_data": "spec.forProvider.osProfile[*].customDataSecretRef", "os_profile[*].linux_configuration[*].admin_password": "spec.forProvider.osProfile[*].linuxConfiguration[*].adminPasswordSecretRef", "os_profile[*].windows_configuration[*].admin_password": "spec.forProvider.osProfile[*].windowsConfiguration[*].adminPasswordSecretRef"}
+	return map[string]string{"extension[*].protected_settings": "spec.forProvider.extension[*].protectedSettingsSecretRef", "os_profile[*].custom_data": "spec.forProvider.osProfile[*].customDataSecretRef", "os_profile[*].linux_configuration[*].admin_password": "spec.forProvider.osProfile[*].linuxConfiguration[*].adminPasswordSecretRef", "os_profile[*].windows_configuration[*].admin_password": "spec.forProvider.osProfile[*].windowsConfiguration[*].adminPasswordSecretRef", "user_data_base64": "spec.forProvider.userDataBase64SecretRef"}
 }
 
 // GetObservation of this OrchestratedVirtualMachineScaleSet

@@ -149,6 +149,10 @@ type VolumeParameters struct {
 	// +kubebuilder:validation:Required
 	Location *string `json:"location" tf:"location,omitempty"`
 
+	// Indicates which network feature to use, accepted values are Basic or Standard, it defaults to Basic if not defined. This is a feature in public preview and for more information about it and how to register, please refer to Configure network features for an Azure NetApp Files volume.
+	// +kubebuilder:validation:Optional
+	NetworkFeatures *string `json:"networkFeatures,omitempty" tf:"network_features,omitempty"`
+
 	// The name of the NetApp pool in which the NetApp Volume should be created. Changing this forces a new resource to be created.
 	// +crossplane:generate:reference:type=Pool
 	// +kubebuilder:validation:Optional

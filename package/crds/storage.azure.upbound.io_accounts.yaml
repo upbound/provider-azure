@@ -145,6 +145,13 @@ spec:
                           description: Is the blob service properties for change feed
                             events enabled? Default to false.
                           type: boolean
+                        changeFeedRetentionInDays:
+                          description: The duration of change feed events retention
+                            in days. The possible values are between 1 and 146000
+                            days (400 years). Setting this to null (or omit this in
+                            the configuration file) indicates an infinite retention
+                            of the change feed.
+                          type: number
                         containerDeleteRetentionPolicy:
                           description: A container_delete_retention_policy block as
                             defined below.
@@ -261,6 +268,11 @@ spec:
                       - userAssignedIdentityId
                       type: object
                     type: array
+                  defaultToOauthAuthentication:
+                    description: Default to Azure Active Directory authorization in
+                      the Azure portal when accessing the Storage Account. The default
+                      value is false
+                    type: boolean
                   edgeZone:
                     description: Specifies the Edge Zone within the Azure Region where
                       this Storage Account should exist. Changing this forces a new
@@ -363,6 +375,10 @@ spec:
                   nfsv3Enabled:
                     description: Is NFSv3 protocol enabled? Changing this forces a
                       new resource to be created. Defaults to false.
+                    type: boolean
+                  publicNetworkAccessEnabled:
+                    description: Whether the public network access is enabled? Defaults
+                      to true.
                     type: boolean
                   queueEncryptionKeyType:
                     description: The encryption type of the queue service. Possible
@@ -678,6 +694,11 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                              multichannelEnabled:
+                                description: Indicates whether multichannel is enabled.
+                                  Defaults to false. This is only supported on Premium
+                                  storage accounts.
+                                type: boolean
                               versions:
                                 description: A set of SMB protocol versions. Possible
                                   values are SMB2.1, SMB3.0, and SMB3.1.1.

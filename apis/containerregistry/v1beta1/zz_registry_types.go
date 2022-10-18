@@ -36,7 +36,7 @@ type GeoreplicationsObservation struct {
 
 type GeoreplicationsParameters struct {
 
-	// Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created.
+	// A location where the container registry should be geo-replicated.
 	// +kubebuilder:validation:Required
 	Location *string `json:"location" tf:"location,omitempty"`
 
@@ -44,7 +44,7 @@ type GeoreplicationsParameters struct {
 	// +kubebuilder:validation:Optional
 	RegionalEndpointEnabled *bool `json:"regionalEndpointEnabled,omitempty" tf:"regional_endpoint_enabled,omitempty"`
 
-	// A mapping of tags to assign to the resource.
+	// A mapping of tags to assign to this replication location.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 

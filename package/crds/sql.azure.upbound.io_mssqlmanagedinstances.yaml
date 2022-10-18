@@ -93,7 +93,7 @@ spec:
                     type: string
                   dnsZonePartnerId:
                     description: The ID of the SQL Managed Instance which will share
-                      the DNS zone. This is a prerequisite for creating an azurerm_managed_instance_failover_group.
+                      the DNS zone. This is a prerequisite for creating an azurerm_sql_managed_instance_failover_group.
                       Setting this after creation forces a new resource to be created.
                     type: string
                   dnsZonePartnerIdRef:
@@ -315,8 +315,8 @@ spec:
                     type: object
                   skuName:
                     description: Specifies the SKU Name for the SQL Managed Instance.
-                      Valid values include GP_Gen4, GP_Gen5, GP_G8IM, GP_G8IH, BC_Gen4,
-                      BC_Gen5, BC_G8IM or BC_G8IH.
+                      Valid values include GP_Gen4, GP_Gen5, GP_Gen8IM, GP_Gen8IH,
+                      BC_Gen4, BC_Gen5, BC_Gen8IM or BC_Gen8IH.
                     type: string
                   storageAccountType:
                     description: Specifies the storage account type used to store

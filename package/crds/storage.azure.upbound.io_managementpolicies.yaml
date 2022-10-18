@@ -176,10 +176,9 @@ spec:
                                 items:
                                   properties:
                                     name:
-                                      description: A rule name can contain any combination
-                                        of alpha numeric characters. Rule name is
-                                        case-sensitive. It must be unique within a
-                                        policy.
+                                      description: The name of the rule. Rule name
+                                        is case-sensitive. It must be unique within
+                                        a policy.
                                       type: string
                                     operation:
                                       description: The comparison operator which is
@@ -206,8 +205,7 @@ spec:
                             type: object
                           type: array
                         name:
-                          description: A rule name can contain any combination of
-                            alpha numeric characters. Rule name is case-sensitive.
+                          description: The name of the rule. Rule name is case-sensitive.
                             It must be unique within a policy.
                           type: string
                       required:

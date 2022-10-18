@@ -13,6 +13,26 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type IdentityObservation struct {
+
+	// The Route ID.
+	PrincipalID *string `json:"principalId,omitempty" tf:"principal_id,omitempty"`
+
+	// The Route ID.
+	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
+}
+
+type IdentityParameters struct {
+
+	// A list of User Assigned Managed Identity IDs to be assigned to this Batch Account.
+	// +kubebuilder:validation:Optional
+	IdentityIds []*string `json:"identityIds,omitempty" tf:"identity_ids,omitempty"`
+
+	// Specifies the type of Managed Service Identity that should be configured on this Batch Account. Possible values are SystemAssigned, UserAssigned, SystemAssigned, UserAssigned (to enable both).
+	// +kubebuilder:validation:Required
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
 type PatchScheduleObservation struct {
 }
 
@@ -39,6 +59,10 @@ type RedisCacheObservation struct {
 	// The Route ID.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// An identity block as defined below.
+	// +kubebuilder:validation:Optional
+	Identity []IdentityObservation `json:"identity,omitempty" tf:"identity,omitempty"`
+
 	// The non-SSL Port of the Redis Instance
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
@@ -63,6 +87,10 @@ type RedisCacheParameters struct {
 	// The SKU family/pricing group to use. Valid values are C (for Basic/Standard SKU family) and P (for Premium)
 	// +kubebuilder:validation:Required
 	Family *string `json:"family" tf:"family,omitempty"`
+
+	// An identity block as defined below.
+	// +kubebuilder:validation:Optional
+	Identity []IdentityParameters `json:"identity,omitempty" tf:"identity,omitempty"`
 
 	// The location of the resource group.
 	// +kubebuilder:validation:Required

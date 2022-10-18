@@ -82,12 +82,9 @@ spec:
                       stored with the policy definition.
                     type: string
                   mode:
-                    description: The policy mode that allows you to specify which
-                      resource types will be evaluated. Possible values are All, Indexed,
-                      Microsoft.ContainerService.Data, Microsoft.CustomerLockbox.Data,
-                      Microsoft.DataCatalog.Data, Microsoft.KeyVault.Data, Microsoft.Kubernetes.Data,
-                      Microsoft.MachineLearningServices.Data, Microsoft.Network.Data
-                      and Microsoft.Synapse.Data.
+                    description: The policy resource manager mode that allows you
+                      to specify which resource types will be evaluated. Possible
+                      values are All or Indexed.
                     type: string
                   parameters:
                     description: Parameters for the policy definition. This field
@@ -288,6 +285,12 @@ spec:
                   id:
                     description: The ID of the Policy Definition.
                     type: string
+                  roleDefinitionIds:
+                    description: A list of role definition id extracted from policy_rule
+                      required for remediation.
+                    items:
+                      type: string
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.

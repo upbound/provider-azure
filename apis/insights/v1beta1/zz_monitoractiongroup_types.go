@@ -147,12 +147,24 @@ type EventHubReceiverObservation struct {
 type EventHubReceiverParameters struct {
 
 	// The resource ID of the respective Event Hub.
-	// +kubebuilder:validation:Required
-	EventHubID *string `json:"eventHubId" tf:"event_hub_id,omitempty"`
+	// +kubebuilder:validation:Optional
+	EventHubID *string `json:"eventHubId,omitempty" tf:"event_hub_id,omitempty"`
+
+	// The name of the specific Event Hub queue.
+	// +kubebuilder:validation:Optional
+	EventHubName *string `json:"eventHubName,omitempty" tf:"event_hub_name,omitempty"`
+
+	// The namespace name of the Event Hub.
+	// +kubebuilder:validation:Optional
+	EventHubNamespace *string `json:"eventHubNamespace,omitempty" tf:"event_hub_namespace,omitempty"`
 
 	// The name of the Action Group. Changing this forces a new resource to be created.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
+
+	// The ID for the subscription containing this Event Hub. Default to the subscription ID of the Action Group.
+	// +kubebuilder:validation:Optional
+	SubscriptionID *string `json:"subscriptionId,omitempty" tf:"subscription_id,omitempty"`
 
 	// The Tenant ID for the subscription containing this Event Hub.
 	// +kubebuilder:validation:Optional

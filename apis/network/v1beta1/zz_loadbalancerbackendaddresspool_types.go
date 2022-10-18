@@ -21,6 +21,9 @@ type LoadBalancerBackendAddressPoolObservation struct {
 	// The ID of the Backend Address Pool.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// An array of the Load Balancing Inbound NAT Rules associated with this Backend Address Pool.
+	InboundNATRules []*string `json:"inboundNatRules,omitempty" tf:"inbound_nat_rules,omitempty"`
+
 	// The Load Balancing Rules associated with this Backend Address Pool.
 	LoadBalancingRules []*string `json:"loadBalancingRules,omitempty" tf:"load_balancing_rules,omitempty"`
 

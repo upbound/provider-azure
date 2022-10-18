@@ -27,7 +27,21 @@ type LoadBalancerNatRuleObservation struct {
 
 type LoadBalancerNatRuleParameters struct {
 
-	// The port used for internal connections on the endpoint. Possible values range between 0 and 65535, inclusive.
+	// Specifies a reference to backendAddressPool resource.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azure/apis/network/v1beta1.LoadBalancerBackendAddressPool
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	BackendAddressPoolID *string `json:"backendAddressPoolId,omitempty" tf:"backend_address_pool_id,omitempty"`
+
+	// Reference to a LoadBalancerBackendAddressPool in network to populate backendAddressPoolId.
+	// +kubebuilder:validation:Optional
+	BackendAddressPoolIDRef *v1.Reference `json:"backendAddressPoolIdRef,omitempty" tf:"-"`
+
+	// Selector for a LoadBalancerBackendAddressPool in network to populate backendAddressPoolId.
+	// +kubebuilder:validation:Optional
+	BackendAddressPoolIDSelector *v1.Selector `json:"backendAddressPoolIdSelector,omitempty" tf:"-"`
+
+	// The port used for internal connections on the endpoint. Possible values range between 1 and 65535, inclusive.
 	// +kubebuilder:validation:Required
 	BackendPort *float64 `json:"backendPort" tf:"backend_port,omitempty"`
 
@@ -43,9 +57,17 @@ type LoadBalancerNatRuleParameters struct {
 	// +kubebuilder:validation:Required
 	FrontendIPConfigurationName *string `json:"frontendIpConfigurationName" tf:"frontend_ip_configuration_name,omitempty"`
 
-	// The port for the external endpoint. Port numbers for each Rule must be unique within the Load Balancer. Possible values range between 0 and 65534, inclusive.
-	// +kubebuilder:validation:Required
-	FrontendPort *float64 `json:"frontendPort" tf:"frontend_port,omitempty"`
+	// The port for the external endpoint. Port numbers for each Rule must be unique within the Load Balancer. Possible values range between 1 and 65534, inclusive.
+	// +kubebuilder:validation:Optional
+	FrontendPort *float64 `json:"frontendPort,omitempty" tf:"frontend_port,omitempty"`
+
+	// The port range end for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeStart. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534, inclusive.
+	// +kubebuilder:validation:Optional
+	FrontendPortEnd *float64 `json:"frontendPortEnd,omitempty" tf:"frontend_port_end,omitempty"`
+
+	// The port range start for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeEnd. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534, inclusive.
+	// +kubebuilder:validation:Optional
+	FrontendPortStart *float64 `json:"frontendPortStart,omitempty" tf:"frontend_port_start,omitempty"`
 
 	// Specifies the idle timeout in minutes for TCP connections. Valid values are between 4 and 30 minutes. Defaults to 4 minutes.
 	// +kubebuilder:validation:Optional

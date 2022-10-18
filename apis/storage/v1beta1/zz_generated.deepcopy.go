@@ -651,6 +651,11 @@ func (in *AccountParameters) DeepCopyInto(out *AccountParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.DefaultToOauthAuthentication != nil {
+		in, out := &in.DefaultToOauthAuthentication, &out.DefaultToOauthAuthentication
+		*out = new(bool)
+		**out = **in
+	}
 	if in.EdgeZone != nil {
 		in, out := &in.EdgeZone, &out.EdgeZone
 		*out = new(string)
@@ -702,6 +707,11 @@ func (in *AccountParameters) DeepCopyInto(out *AccountParameters) {
 	}
 	if in.Nfsv3Enabled != nil {
 		in, out := &in.Nfsv3Enabled, &out.Nfsv3Enabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.PublicNetworkAccessEnabled != nil {
+		in, out := &in.PublicNetworkAccessEnabled, &out.PublicNetworkAccessEnabled
 		*out = new(bool)
 		**out = **in
 	}
@@ -1452,6 +1462,11 @@ func (in *BlobPropertiesParameters) DeepCopyInto(out *BlobPropertiesParameters) 
 	if in.ChangeFeedEnabled != nil {
 		in, out := &in.ChangeFeedEnabled, &out.ChangeFeedEnabled
 		*out = new(bool)
+		**out = **in
+	}
+	if in.ChangeFeedRetentionInDays != nil {
+		in, out := &in.ChangeFeedRetentionInDays, &out.ChangeFeedRetentionInDays
+		*out = new(float64)
 		**out = **in
 	}
 	if in.ContainerDeleteRetentionPolicy != nil {
@@ -3743,6 +3758,11 @@ func (in *SMBParameters) DeepCopyInto(out *SMBParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.MultichannelEnabled != nil {
+		in, out := &in.MultichannelEnabled, &out.MultichannelEnabled
+		*out = new(bool)
+		**out = **in
 	}
 	if in.Versions != nil {
 		in, out := &in.Versions, &out.Versions

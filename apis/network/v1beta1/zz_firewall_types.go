@@ -115,7 +115,7 @@ type FirewallParameters struct {
 	// +kubebuilder:validation:Required
 	SkuName *string `json:"skuName" tf:"sku_name,omitempty"`
 
-	// SKU tier of the Firewall. Possible values are Premium and Standard.  Changing this forces a new resource to be created.
+	// SKU tier of the Firewall. Possible values are Premium, Standard and Basic.
 	// +kubebuilder:validation:Required
 	SkuTier *string `json:"skuTier" tf:"sku_tier,omitempty"`
 
@@ -123,7 +123,7 @@ type FirewallParameters struct {
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// The operation mode for threat intelligence-based filtering. Possible values are: Off, Alert,Deny and ""(empty string). Defaults to Alert.
+	// The operation mode for threat intelligence-based filtering. Possible values are: Off, Alert and Deny. Defaults to Alert.
 	// +kubebuilder:validation:Optional
 	ThreatIntelMode *string `json:"threatIntelMode,omitempty" tf:"threat_intel_mode,omitempty"`
 

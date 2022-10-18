@@ -356,6 +356,12 @@ spec:
                   id:
                     description: The ID of the Backend Address Pool.
                     type: string
+                  inboundNatRules:
+                    description: An array of the Load Balancing Inbound NAT Rules
+                      associated with this Backend Address Pool.
+                    items:
+                      type: string
+                    type: array
                   loadBalancingRules:
                     description: The Load Balancing Rules associated with this Backend
                       Address Pool.

@@ -309,6 +309,11 @@ spec:
                     description: A default_node_pool block as defined below.
                     items:
                       properties:
+                        capacityReservationGroupId:
+                          description: Specifies the ID of the Capacity Reservation
+                            Group within which this AKS Cluster should be created.
+                            Changing this forces a new resource to be created.
+                          type: string
                         enableAutoScaling:
                           description: Should the Kubernetes Auto Scaler be enabled
                             for this Node Pool? Defaults to false.
@@ -327,6 +332,9 @@ spec:
                             Information Processing Standard enabled? Changing this
                             forces a new resource to be created.
                           type: boolean
+                        hostGroupId:
+                          description: The Kubernetes Managed Cluster ID.
+                          type: string
                         kubeletConfig:
                           description: A kubelet_config block as defined below.
                           items:
@@ -579,6 +587,14 @@ spec:
                             each agent. Changing this forces a new resource to be
                             created.
                           type: number
+                        messageOfTheDay:
+                          description: A base64-encoded string which will be written
+                            to /etc/motd after decoding. This allows customization
+                            of the message of the day for Linux nodes. It cannot be
+                            specified for Windows nodes and must be a static string
+                            (i.e. will be printed raw and not executed as a script).
+                            Changing this forces a new resource to be created.
+                          type: string
                         minCount:
                           description: The minimum number of nodes which should exist
                             in this Node Pool. If specified this must be between 1
@@ -620,7 +636,12 @@ spec:
                             If not specified, the default node pool will be created
                             with the version specified by kubernetes_version. If both
                             are unspecified, the latest recommended version will be
-                            used at provisioning time (but won't auto-upgrade)
+                            used at provisioning time (but won't auto-upgrade). AKS
+                            does not require an exact patch version to be specified,
+                            minor version aliases such as 1.22 are also supported.
+                            - The minor version's latest GA patch is automatically
+                            chosen in that case. More details can be found in the
+                            documentation.
                           type: string
                         osDiskSizeGb:
                           description: The size of the OS Disk which should be used
@@ -724,6 +745,12 @@ spec:
                           type: object
                         proximityPlacementGroupId:
                           description: The Kubernetes Managed Cluster ID.
+                          type: string
+                        scaleDownMode:
+                          description: Specifies the autoscaling behaviour of the
+                            Kubernetes Cluster. If not specified, it defaults to 'ScaleDownModeDelete'.
+                            Possible values include 'ScaleDownModeDelete' and 'ScaleDownModeDeallocate'.
+                            Changing this forces a new resource to be created.
                           type: string
                         tags:
                           additionalProperties:
@@ -840,6 +867,10 @@ spec:
                                   type: string
                               type: object
                           type: object
+                        workloadRuntime:
+                          description: Specifies the workload runtime used by the
+                            node pool. Possible values are OCIContainer.
+                          type: string
                         zones:
                           description: Specifies a list of Availability Zones in which
                             this Kubernetes Cluster should be located. Changing this
@@ -855,7 +886,8 @@ spec:
                   diskEncryptionSetId:
                     description: The ID of the Disk Encryption Set which should be
                       used for the Nodes and Volumes. More information can be found
-                      in the documentation.
+                      in the documentation. Changing this forces a new resource to
+                      be created.
                     type: string
                   dnsPrefix:
                     description: DNS prefix specified when creating the managed cluster.
@@ -864,6 +896,11 @@ spec:
                   dnsPrefixPrivateCluster:
                     description: Specifies the DNS prefix to use with private clusters.
                       Changing this forces a new resource to be created.
+                    type: string
+                  edgeZone:
+                    description: Specifies the Edge Zone within the Azure Region where
+                      this Managed Kubernetes Cluster should exist. Changing this
+                      forces a new resource to be created.
                     type: string
                   enablePodSecurityPolicy:
                     type: boolean
@@ -922,8 +959,7 @@ spec:
                         type:
                           description: Specifies the type of Managed Service Identity
                             that should be configured on this Kubernetes Cluster.
-                            Possible values are SystemAssigned, UserAssigned, SystemAssigned,
-                            UserAssigned (to enable both).
+                            Possible values are SystemAssigned or UserAssigned.
                           type: string
                       required:
                       - type
@@ -1078,6 +1114,10 @@ spec:
                     description: Version of Kubernetes specified when creating the
                       AKS managed cluster. If not specified, the latest recommended
                       version will be used at provisioning time (but won't auto-upgrade).
+                      AKS does not require an exact patch version to be specified,
+                      minor version aliases such as 1.22 are also supported. - The
+                      minor version's latest GA patch is automatically chosen in that
+                      case. More details can be found in the documentation.
                     type: string
                   linuxProfile:
                     description: A linux_profile block as defined below.
@@ -1212,6 +1252,13 @@ spec:
                                   for the cluster load balancer. Must be between 1
                                   and 100 inclusive.
                                 type: number
+                              managedOutboundIpv6Count:
+                                description: The desired number of IPv6 outbound IPs
+                                  created and managed by Azure for the cluster load
+                                  balancer. Must be in the range of 1 to 100 (inclusive).
+                                  The default value is 0 for single-stack and 1 for
+                                  dual-stack.
+                                type: number
                               outboundIpAddressIds:
                                 description: The ID of the Public IP Addresses which
                                   should be used for outbound communication for the
@@ -1283,10 +1330,26 @@ spec:
                             field can only be set when network_plugin is set to kubenet.
                             Changing this forces a new resource to be created.
                           type: string
+                        podCidrs:
+                          description: A list of CIDRs to use for pod IP addresses.
+                            For single-stack networking a single IPv4 CIDR is expected.
+                            For dual-stack networking an IPv4 and IPv6 CIDR are expected.
+                            Changing this forces a new resource to be created.
+                          items:
+                            type: string
+                          type: array
                         serviceCidr:
                           description: The Network Range used by the Kubernetes service.
                             Changing this forces a new resource to be created.
                           type: string
+                        serviceCidrs:
+                          description: A list of CIDRs to use for Kubernetes services.
+                            For single-stack networking a single IPv4 CIDR is expected.
+                            For dual-stack networking an IPv4 and IPv6 CIDR are expected.
+                            Changing this forces a new resource to be created.
+                          items:
+                            type: string
+                          type: array
                       required:
                       - networkPlugin
                       type: object
@@ -1488,6 +1551,27 @@ spec:
                         adminUsername:
                           description: The Admin Username for Windows VMs.
                           type: string
+                        gmsa:
+                          description: A gmsa block as defined below.
+                          items:
+                            properties:
+                              dnsServer:
+                                description: Specifies the DNS server for Windows
+                                  gMSA. Set this to an empty string if you have configured
+                                  the DNS server in the VNet which was used to create
+                                  the managed cluster.
+                                type: string
+                              rootDomain:
+                                description: Specifies the root domain name for Windows
+                                  gMSA. Set this to an empty string if you have configured
+                                  the DNS server in the VNet which was used to create
+                                  the managed cluster.
+                                type: string
+                            required:
+                            - dnsServer
+                            - rootDomain
+                            type: object
+                          type: array
                         license:
                           description: Specifies the type of on-premise license which
                             should be used for Node Pool Windows Virtual Machine.
@@ -1497,6 +1581,10 @@ spec:
                       - adminUsername
                       type: object
                     type: array
+                  workloadIdentityEnabled:
+                    description: Specifies whether Azure AD Workload Identity should
+                      be enabled for the Cluster. Defaults to false.
+                    type: boolean
                 required:
                 - defaultNodePool
                 - location
