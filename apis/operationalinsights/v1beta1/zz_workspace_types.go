@@ -24,6 +24,10 @@ type WorkspaceObservation struct {
 
 type WorkspaceParameters struct {
 
+	// Is Customer Managed Storage mandatory for query management?
+	// +kubebuilder:validation:Optional
+	CmkForQueryForced *bool `json:"cmkForQueryForced,omitempty" tf:"cmk_for_query_forced,omitempty"`
+
 	// The workspace daily quota for ingestion in GB.  Defaults to -1 (unlimited) if omitted.
 	// +kubebuilder:validation:Optional
 	DailyQuotaGb *float64 `json:"dailyQuotaGb,omitempty" tf:"daily_quota_gb,omitempty"`
@@ -31,7 +35,7 @@ type WorkspaceParameters struct {
 	// +kubebuilder:validation:Optional
 	InternetIngestionEnabled *bool `json:"internetIngestionEnabled,omitempty" tf:"internet_ingestion_enabled,omitempty"`
 
-	// Should the Log Analytics Workflow support querying over the Public Internet? Defaults to true.
+	// Should the Log Analytics Workspace support querying over the Public Internet? Defaults to true.
 	// +kubebuilder:validation:Optional
 	InternetQueryEnabled *bool `json:"internetQueryEnabled,omitempty" tf:"internet_query_enabled,omitempty"`
 

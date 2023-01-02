@@ -310,7 +310,11 @@ type IdentityObservation struct {
 
 type IdentityParameters struct {
 
-	// Specifies the type of Managed Service Identity that should be configured on this Cosmos Account. The only possible value is SystemAssigned.
+	// Specifies a list of User Assigned Managed Identity IDs to be assigned to this Cosmos Account.
+	// +kubebuilder:validation:Optional
+	IdentityIds []*string `json:"identityIds,omitempty" tf:"identity_ids,omitempty"`
+
+	// The Type of Managed Identity assigned to this Cosmos account. Possible values are SystemAssigned, UserAssigned and SystemAssigned, UserAssigned.
 	// +kubebuilder:validation:Required
 	Type *string `json:"type" tf:"type,omitempty"`
 }

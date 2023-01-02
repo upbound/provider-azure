@@ -22,7 +22,7 @@ type DiskEncryptionKeyParameters struct {
 	// +kubebuilder:validation:Required
 	SecretURL *string `json:"secretUrl" tf:"secret_url,omitempty"`
 
-	// The ID of the source Key Vault.
+	// The ID of the source Key Vault. This can be found as id on the azurerm_key_vault resource.
 	// +kubebuilder:validation:Required
 	SourceVaultID *string `json:"sourceVaultId" tf:"source_vault_id,omitempty"`
 }
@@ -36,9 +36,8 @@ type EncryptionSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskEncryptionKey []DiskEncryptionKeyParameters `json:"diskEncryptionKey,omitempty" tf:"disk_encryption_key,omitempty"`
 
-	// Is Encryption enabled on this Managed Disk? Changing this forces a new resource to be created.
-	// +kubebuilder:validation:Required
-	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// A key_encryption_key block as defined below.
 	// +kubebuilder:validation:Optional
@@ -54,7 +53,7 @@ type KeyEncryptionKeyParameters struct {
 	// +kubebuilder:validation:Required
 	KeyURL *string `json:"keyUrl" tf:"key_url,omitempty"`
 
-	// The ID of the source Key Vault.
+	// The ID of the source Key Vault. This can be found as id on the azurerm_key_vault resource.
 	// +kubebuilder:validation:Required
 	SourceVaultID *string `json:"sourceVaultId" tf:"source_vault_id,omitempty"`
 }
@@ -190,7 +189,7 @@ type ManagedDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	StorageAccountID *string `json:"storageAccountId,omitempty" tf:"storage_account_id,omitempty"`
 
-	// The type of storage to use for the managed disk. Possible values are Standard_LRS, StandardSSD_ZRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS or UltraSSD_LRS.
+	// The type of storage to use for the managed disk. Possible values are Standard_LRS, StandardSSD_ZRS, Premium_LRS, PremiumV2_LRS, Premium_ZRS, StandardSSD_LRS or UltraSSD_LRS.
 	// +kubebuilder:validation:Required
 	StorageAccountType *string `json:"storageAccountType" tf:"storage_account_type,omitempty"`
 

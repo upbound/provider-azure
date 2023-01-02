@@ -70,6 +70,24 @@ type PrivateDNSZoneGroupParameters struct {
 	PrivateDNSZoneIdsSelector *v1.Selector `json:"privateDnsZoneIdsSelector,omitempty" tf:"-"`
 }
 
+type PrivateEndpointIPConfigurationObservation struct {
+}
+
+type PrivateEndpointIPConfigurationParameters struct {
+
+	// The Name of the IP Configuration.
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// The static IP address set by this configuration. It is recommended to use the private IP address exported in the private_service_connection block to obtain the address associated with the private endpoint.
+	// +kubebuilder:validation:Required
+	PrivateIPAddress *string `json:"privateIpAddress" tf:"private_ip_address,omitempty"`
+
+	// The subresource this IP address applies to, which corresponds to the group_id.
+	// +kubebuilder:validation:Required
+	SubresourceName *string `json:"subresourceName" tf:"subresource_name,omitempty"`
+}
+
 type PrivateEndpointNetworkInterfaceObservation struct {
 
 	// The ID of the network interface associated with the private_endpoint.
@@ -102,6 +120,14 @@ type PrivateEndpointObservation struct {
 }
 
 type PrivateEndpointParameters struct {
+
+	// The custom name of the network interface attached to the private endpoint. Changing this forces a new resource to be created.
+	// +kubebuilder:validation:Optional
+	CustomNetworkInterfaceName *string `json:"customNetworkInterfaceName,omitempty" tf:"custom_network_interface_name,omitempty"`
+
+	// An ip_configuration block as defined below. This allows a static IP address to be set for this Private Endpoint, otherwise an address is dynamically allocated from the Subnet. At most one IP configuration is allowed. Changing this forces a new resource to be created.
+	// +kubebuilder:validation:Optional
+	IPConfiguration []PrivateEndpointIPConfigurationParameters `json:"ipConfiguration,omitempty" tf:"ip_configuration,omitempty"`
 
 	// The supported Azure location where the resource exists. Changing this forces a new resource to be created.
 	// +kubebuilder:validation:Required

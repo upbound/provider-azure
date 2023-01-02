@@ -1310,6 +1310,11 @@ func (in *VolumeParameters) DeepCopyInto(out *VolumeParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.NetworkFeatures != nil {
+		in, out := &in.NetworkFeatures, &out.NetworkFeatures
+		*out = new(string)
+		**out = **in
+	}
 	if in.PoolName != nil {
 		in, out := &in.PoolName, &out.PoolName
 		*out = new(string)

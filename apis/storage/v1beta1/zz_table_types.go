@@ -57,7 +57,7 @@ type TableParameters struct {
 	// +kubebuilder:validation:Optional
 	ACL []TableACLParameters `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// The name of the storage table. Must be unique within the storage account the table is located.
+	// The name of the storage table. Only Alphanumeric characters allowed, starting with a letter. Must be unique within the storage account the table is located.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 

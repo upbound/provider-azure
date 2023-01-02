@@ -36,6 +36,7 @@ metadata:
   name: example
 spec:
   forProvider:
+    displayName: my-policy-definition
     mode: All
     policyRule: "\t{\n    \"if\": {\n      \"not\": {\n        \"field\": \"location\",\n
       \       \"equals\": \"westeurope\"\n      }\n    },\n    \"then\": {\n      \"effect\":

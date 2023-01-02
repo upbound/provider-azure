@@ -83,7 +83,7 @@ spec:
                               actions:
                                 description: A list of Actions which should be delegated.
                                   This list is specific to the service to delegate
-                                  to. Possible values include Microsoft.Network/networkinterfaces/*,
+                                  to. Possible values include Microsoft.Network/publicIPAddresses/read,Microsoft.Network/virtualNetworks/read,Microsoft.Network/networkinterfaces/*,
                                   Microsoft.Network/virtualNetworks/subnets/action,
                                   Microsoft.Network/virtualNetworks/subnets/join/action,
                                   Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action
@@ -103,11 +103,13 @@ spec:
                                   Microsoft.HardwareSecurityModules/dedicatedHSMs,
                                   Microsoft.Kusto/clusters, Microsoft.Logic/integrationServiceEnvironments,
                                   Microsoft.MachineLearningServices/workspaces, Microsoft.Netapp/volumes,
-                                  Microsoft.Network/managedResolvers, Microsoft.PowerPlatform/vnetaccesslinks,
-                                  Microsoft.ServiceFabricMesh/networks, Microsoft.Sql/managedInstances,
-                                  Microsoft.Sql/servers, Microsoft.StoragePool/diskPools,
-                                  Microsoft.StreamAnalytics/streamingJobs, Microsoft.Synapse/workspaces,
-                                  Microsoft.Web/hostingEnvironments, and Microsoft.Web/serverFarms.
+                                  Microsoft.Network/managedResolvers, Microsoft.Orbital/orbitalGateways,
+                                  Microsoft.PowerPlatform/vnetaccesslinks, Microsoft.ServiceFabricMesh/networks,
+                                  Microsoft.Sql/managedInstances, Microsoft.Sql/servers,
+                                  Microsoft.StoragePool/diskPools, Microsoft.StreamAnalytics/streamingJobs,
+                                  Microsoft.Synapse/workspaces, Microsoft.Web/hostingEnvironments,
+                                  Microsoft.Web/serverFarms, NGINX.NGINXPLUS/nginxDeployments
+                                  and PaloAltoNetworks.Cloudngfw/firewalls.
                                 type: string
                             required:
                             - name
@@ -119,16 +121,20 @@ spec:
                       type: object
                     type: array
                   enforcePrivateLinkEndpointNetworkPolicies:
-                    description: Enable or Disable network policies for the private
-                      link endpoint on the subnet. Setting this to true will Disable
-                      the policy and setting this to false will Enable the policy.
-                      Default value is false.
                     type: boolean
                   enforcePrivateLinkServiceNetworkPolicies:
+                    type: boolean
+                  privateEndpointNetworkPoliciesEnabled:
                     description: Enable or Disable network policies for the private
-                      link service on the subnet. Setting this to true will Disable
-                      the policy and setting this to false will Enable the policy.
-                      Default value is false.
+                      endpoint on the subnet. Setting this to true will Enable the
+                      policy and setting this to false will Disable the policy. Defaults
+                      to true.
+                    type: boolean
+                  privateLinkServiceNetworkPoliciesEnabled:
+                    description: Enable or Disable network policies for the private
+                      link service on the subnet. Setting this to true will Enable
+                      the policy and setting this to false will Disable the policy.
+                      Defaults to true.
                     type: boolean
                   resourceGroupName:
                     description: The name of the resource group in which to create

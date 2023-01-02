@@ -76,6 +76,26 @@ spec:
                     description: The SKU family/pricing group to use. Valid values
                       are C (for Basic/Standard SKU family) and P (for Premium)
                     type: string
+                  identity:
+                    description: An identity block as defined below.
+                    items:
+                      properties:
+                        identityIds:
+                          description: A list of User Assigned Managed Identity IDs
+                            to be assigned to this Batch Account.
+                          items:
+                            type: string
+                          type: array
+                        type:
+                          description: Specifies the type of Managed Service Identity
+                            that should be configured on this Batch Account. Possible
+                            values are SystemAssigned, UserAssigned, SystemAssigned,
+                            UserAssigned (to enable both).
+                          type: string
+                      required:
+                      - type
+                      type: object
+                    type: array
                   location:
                     description: The location of the resource group.
                     type: string
@@ -601,6 +621,18 @@ spec:
                   id:
                     description: The Route ID.
                     type: string
+                  identity:
+                    description: An identity block as defined below.
+                    items:
+                      properties:
+                        principalId:
+                          description: The Route ID.
+                          type: string
+                        tenantId:
+                          description: The Route ID.
+                          type: string
+                      type: object
+                    type: array
                   port:
                     description: The non-SSL Port of the Redis Instance
                     type: number

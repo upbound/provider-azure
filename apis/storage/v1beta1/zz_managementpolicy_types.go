@@ -111,7 +111,7 @@ type MatchBlobIndexTagObservation struct {
 
 type MatchBlobIndexTagParameters struct {
 
-	// A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy.
+	// The name of the rule. Rule name is case-sensitive. It must be unique within a policy.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
@@ -141,7 +141,7 @@ type RuleParameters struct {
 	// +kubebuilder:validation:Optional
 	Filters []FiltersParameters `json:"filters,omitempty" tf:"filters,omitempty"`
 
-	// A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy.
+	// The name of the rule. Rule name is case-sensitive. It must be unique within a policy.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 }

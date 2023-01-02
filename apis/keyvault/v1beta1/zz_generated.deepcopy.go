@@ -1102,6 +1102,16 @@ func (in *KeyObservation) DeepCopyInto(out *KeyObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ResourceID != nil {
+		in, out := &in.ResourceID, &out.ResourceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ResourceVersionlessID != nil {
+		in, out := &in.ResourceVersionlessID, &out.ResourceVersionlessID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Version != nil {
 		in, out := &in.Version, &out.Version
 		*out = new(string)
@@ -2042,6 +2052,16 @@ func (in *SecretObservation) DeepCopyInto(out *SecretObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ResourceID != nil {
+		in, out := &in.ResourceID, &out.ResourceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ResourceVersionlessID != nil {
+		in, out := &in.ResourceVersionlessID, &out.ResourceVersionlessID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Version != nil {
 		in, out := &in.Version, &out.Version
 		*out = new(string)
@@ -2429,6 +2449,11 @@ func (in *VaultParameters) DeepCopyInto(out *VaultParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.PublicNetworkAccessEnabled != nil {
+		in, out := &in.PublicNetworkAccessEnabled, &out.PublicNetworkAccessEnabled
+		*out = new(bool)
+		**out = **in
 	}
 	if in.PurgeProtectionEnabled != nil {
 		in, out := &in.PurgeProtectionEnabled, &out.PurgeProtectionEnabled

@@ -159,6 +159,10 @@ type DefaultNodePoolObservation struct {
 
 type DefaultNodePoolParameters struct {
 
+	// Specifies the ID of the Capacity Reservation Group within which this AKS Cluster should be created. Changing this forces a new resource to be created.
+	// +kubebuilder:validation:Optional
+	CapacityReservationGroupID *string `json:"capacityReservationGroupId,omitempty" tf:"capacity_reservation_group_id,omitempty"`
+
 	// Should the Kubernetes Auto Scaler be enabled for this Node Pool? Defaults to false.
 	// +kubebuilder:validation:Optional
 	EnableAutoScaling *bool `json:"enableAutoScaling,omitempty" tf:"enable_auto_scaling,omitempty"`
@@ -174,6 +178,10 @@ type DefaultNodePoolParameters struct {
 	// Should the nodes in this Node Pool have Federal Information Processing Standard enabled? Changing this forces a new resource to be created.
 	// +kubebuilder:validation:Optional
 	FipsEnabled *bool `json:"fipsEnabled,omitempty" tf:"fips_enabled,omitempty"`
+
+	// The Kubernetes Managed Cluster ID.
+	// +kubebuilder:validation:Optional
+	HostGroupID *string `json:"hostGroupId,omitempty" tf:"host_group_id,omitempty"`
 
 	// A kubelet_config block as defined below.
 	// +kubebuilder:validation:Optional
@@ -194,6 +202,10 @@ type DefaultNodePoolParameters struct {
 	// The maximum number of pods that can run on each agent. Changing this forces a new resource to be created.
 	// +kubebuilder:validation:Optional
 	MaxPods *float64 `json:"maxPods,omitempty" tf:"max_pods,omitempty"`
+
+	// A base64-encoded string which will be written to /etc/motd after decoding. This allows customization of the message of the day for Linux nodes. It cannot be specified for Windows nodes and must be a static string (i.e. will be printed raw and not executed as a script). Changing this forces a new resource to be created.
+	// +kubebuilder:validation:Optional
+	MessageOfTheDay *string `json:"messageOfTheDay,omitempty" tf:"message_of_the_day,omitempty"`
 
 	// The minimum number of nodes which should exist in this Node Pool. If specified this must be between 1 and 1000.
 	// +kubebuilder:validation:Optional
@@ -222,7 +234,7 @@ type DefaultNodePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	OnlyCriticalAddonsEnabled *bool `json:"onlyCriticalAddonsEnabled,omitempty" tf:"only_critical_addons_enabled,omitempty"`
 
-	// Version of Kubernetes used for the Agents. If not specified, the default node pool will be created with the version specified by kubernetes_version. If both are unspecified, the latest recommended version will be used at provisioning time (but won't auto-upgrade)
+	// Version of Kubernetes used for the Agents. If not specified, the default node pool will be created with the version specified by kubernetes_version. If both are unspecified, the latest recommended version will be used at provisioning time (but won't auto-upgrade). AKS does not require an exact patch version to be specified, minor version aliases such as 1.22 are also supported. - The minor version's latest GA patch is automatically chosen in that case. More details can be found in the documentation.
 	// +kubebuilder:validation:Optional
 	OrchestratorVersion *string `json:"orchestratorVersion,omitempty" tf:"orchestrator_version,omitempty"`
 
@@ -255,6 +267,10 @@ type DefaultNodePoolParameters struct {
 	// The Kubernetes Managed Cluster ID.
 	// +kubebuilder:validation:Optional
 	ProximityPlacementGroupID *string `json:"proximityPlacementGroupId,omitempty" tf:"proximity_placement_group_id,omitempty"`
+
+	// Specifies the autoscaling behaviour of the Kubernetes Cluster. If not specified, it defaults to 'ScaleDownModeDelete'. Possible values include 'ScaleDownModeDelete' and 'ScaleDownModeDeallocate'. Changing this forces a new resource to be created.
+	// +kubebuilder:validation:Optional
+	ScaleDownMode *string `json:"scaleDownMode,omitempty" tf:"scale_down_mode,omitempty"`
 
 	// A mapping of tags to assign to the Node Pool.
 	// +kubebuilder:validation:Optional
@@ -290,9 +306,27 @@ type DefaultNodePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	VnetSubnetIDSelector *v1.Selector `json:"vnetSubnetIdSelector,omitempty" tf:"-"`
 
+	// Specifies the workload runtime used by the node pool. Possible values are OCIContainer.
+	// +kubebuilder:validation:Optional
+	WorkloadRuntime *string `json:"workloadRuntime,omitempty" tf:"workload_runtime,omitempty"`
+
 	// Specifies a list of Availability Zones in which this Kubernetes Cluster should be located. Changing this forces a new Kubernetes Cluster to be created.
 	// +kubebuilder:validation:Optional
 	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
+}
+
+type GmsaObservation struct {
+}
+
+type GmsaParameters struct {
+
+	// Specifies the DNS server for Windows gMSA. Set this to an empty string if you have configured the DNS server in the VNet which was used to create the managed cluster.
+	// +kubebuilder:validation:Required
+	DNSServer *string `json:"dnsServer" tf:"dns_server,omitempty"`
+
+	// Specifies the root domain name for Windows gMSA. Set this to an empty string if you have configured the DNS server in the VNet which was used to create the managed cluster.
+	// +kubebuilder:validation:Required
+	RootDomain *string `json:"rootDomain" tf:"root_domain,omitempty"`
 }
 
 type HTTPProxyConfigObservation struct {
@@ -332,7 +366,7 @@ type IdentityParameters struct {
 	// +kubebuilder:validation:Optional
 	IdentityIds []*string `json:"identityIds,omitempty" tf:"identity_ids,omitempty"`
 
-	// Specifies the type of Managed Service Identity that should be configured on this Kubernetes Cluster. Possible values are SystemAssigned, UserAssigned, SystemAssigned, UserAssigned (to enable both).
+	// Specifies the type of Managed Service Identity that should be configured on this Kubernetes Cluster. Possible values are SystemAssigned or UserAssigned.
 	// +kubebuilder:validation:Required
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -574,9 +608,13 @@ type KubernetesClusterParameters struct {
 	// +kubebuilder:validation:Required
 	DefaultNodePool []DefaultNodePoolParameters `json:"defaultNodePool" tf:"default_node_pool,omitempty"`
 
-	// The ID of the Disk Encryption Set which should be used for the Nodes and Volumes. More information can be found in the documentation.
+	// The ID of the Disk Encryption Set which should be used for the Nodes and Volumes. More information can be found in the documentation. Changing this forces a new resource to be created.
 	// +kubebuilder:validation:Optional
 	DiskEncryptionSetID *string `json:"diskEncryptionSetId,omitempty" tf:"disk_encryption_set_id,omitempty"`
+
+	// Specifies the Edge Zone within the Azure Region where this Managed Kubernetes Cluster should exist. Changing this forces a new resource to be created.
+	// +kubebuilder:validation:Optional
+	EdgeZone *string `json:"edgeZone,omitempty" tf:"edge_zone,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	EnablePodSecurityPolicy *bool `json:"enablePodSecurityPolicy,omitempty" tf:"enable_pod_security_policy,omitempty"`
@@ -605,7 +643,7 @@ type KubernetesClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	KubeletIdentity []KubeletIdentityParameters `json:"kubeletIdentity,omitempty" tf:"kubelet_identity,omitempty"`
 
-	// Version of Kubernetes specified when creating the AKS managed cluster. If not specified, the latest recommended version will be used at provisioning time (but won't auto-upgrade).
+	// Version of Kubernetes specified when creating the AKS managed cluster. If not specified, the latest recommended version will be used at provisioning time (but won't auto-upgrade). AKS does not require an exact patch version to be specified, minor version aliases such as 1.22 are also supported. - The minor version's latest GA patch is automatically chosen in that case. More details can be found in the documentation.
 	// +kubebuilder:validation:Optional
 	KubernetesVersion *string `json:"kubernetesVersion,omitempty" tf:"kubernetes_version,omitempty"`
 
@@ -700,6 +738,10 @@ type KubernetesClusterParameters struct {
 	// A windows_profile block as defined below.
 	// +kubebuilder:validation:Optional
 	WindowsProfile []WindowsProfileParameters `json:"windowsProfile,omitempty" tf:"windows_profile,omitempty"`
+
+	// Specifies whether Azure AD Workload Identity should be enabled for the Cluster. Defaults to false.
+	// +kubebuilder:validation:Optional
+	WorkloadIdentityEnabled *bool `json:"workloadIdentityEnabled,omitempty" tf:"workload_identity_enabled,omitempty"`
 }
 
 type LinuxOsConfigObservation struct {
@@ -753,6 +795,10 @@ type LoadBalancerProfileParameters struct {
 	// Count of desired managed outbound IPs for the cluster load balancer. Must be between 1 and 100 inclusive.
 	// +kubebuilder:validation:Optional
 	ManagedOutboundIPCount *float64 `json:"managedOutboundIpCount,omitempty" tf:"managed_outbound_ip_count,omitempty"`
+
+	// The desired number of IPv6 outbound IPs created and managed by Azure for the cluster load balancer. Must be in the range of 1 to 100 (inclusive). The default value is 0 for single-stack and 1 for dual-stack.
+	// +kubebuilder:validation:Optional
+	ManagedOutboundIPv6Count *float64 `json:"managedOutboundIpv6Count,omitempty" tf:"managed_outbound_ipv6_count,omitempty"`
 
 	// The ID of the Public IP Addresses which should be used for outbound communication for the cluster load balancer.
 	// +kubebuilder:validation:Optional
@@ -865,9 +911,17 @@ type NetworkProfileParameters struct {
 	// +kubebuilder:validation:Optional
 	PodCidr *string `json:"podCidr,omitempty" tf:"pod_cidr,omitempty"`
 
+	// A list of CIDRs to use for pod IP addresses. For single-stack networking a single IPv4 CIDR is expected. For dual-stack networking an IPv4 and IPv6 CIDR are expected. Changing this forces a new resource to be created.
+	// +kubebuilder:validation:Optional
+	PodCidrs []*string `json:"podCidrs,omitempty" tf:"pod_cidrs,omitempty"`
+
 	// The Network Range used by the Kubernetes service. Changing this forces a new resource to be created.
 	// +kubebuilder:validation:Optional
 	ServiceCidr *string `json:"serviceCidr,omitempty" tf:"service_cidr,omitempty"`
+
+	// A list of CIDRs to use for Kubernetes services. For single-stack networking a single IPv4 CIDR is expected. For dual-stack networking an IPv4 and IPv6 CIDR are expected. Changing this forces a new resource to be created.
+	// +kubebuilder:validation:Optional
+	ServiceCidrs []*string `json:"serviceCidrs,omitempty" tf:"service_cidrs,omitempty"`
 }
 
 type NotAllowedObservation struct {
@@ -1095,6 +1149,10 @@ type WindowsProfileParameters struct {
 	// The Admin Username for Windows VMs.
 	// +kubebuilder:validation:Required
 	AdminUsername *string `json:"adminUsername" tf:"admin_username,omitempty"`
+
+	// A gmsa block as defined below.
+	// +kubebuilder:validation:Optional
+	Gmsa []GmsaParameters `json:"gmsa,omitempty" tf:"gmsa,omitempty"`
 
 	// Specifies the type of on-premise license which should be used for Node Pool Windows Virtual Machine. At this time the only possible value is Windows_Server.
 	// +kubebuilder:validation:Optional

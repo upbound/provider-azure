@@ -68,6 +68,11 @@ spec:
                     description: The allocation policy of the IoT Device Provisioning
                       Service (Hashed, GeoLatency or Static). Defaults to Hashed.
                     type: string
+                  dataResidencyEnabled:
+                    description: Specifies if the IoT Device Provisioning Service
+                      has data residency and disaster recovery enabled. Defaults to
+                      false.
+                    type: boolean
                   ipFilterRule:
                     description: An ip_filter_rule block as defined below.
                     items:

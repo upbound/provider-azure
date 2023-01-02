@@ -122,7 +122,8 @@ spec:
                                   id on the azurerm_key_vault_secret resource.
                                 type: string
                               sourceVaultId:
-                                description: The ID of the source Key Vault.
+                                description: The ID of the source Key Vault. This
+                                  can be found as id on the azurerm_key_vault resource.
                                 type: string
                             required:
                             - secretUrl
@@ -130,8 +131,6 @@ spec:
                             type: object
                           type: array
                         enabled:
-                          description: Is Encryption enabled on this Managed Disk?
-                            Changing this forces a new resource to be created.
                           type: boolean
                         keyEncryptionKey:
                           description: A key_encryption_key block as defined below.
@@ -143,15 +142,14 @@ spec:
                                   on the azurerm_key_vault_key resource.
                                 type: string
                               sourceVaultId:
-                                description: The ID of the source Key Vault.
+                                description: The ID of the source Key Vault. This
+                                  can be found as id on the azurerm_key_vault resource.
                                 type: string
                             required:
                             - keyUrl
                             - sourceVaultId
                             type: object
                           type: array
-                      required:
-                      - enabled
                       type: object
                     type: array
                   galleryImageReferenceId:
@@ -384,7 +382,7 @@ spec:
                   storageAccountType:
                     description: The type of storage to use for the managed disk.
                       Possible values are Standard_LRS, StandardSSD_ZRS, Premium_LRS,
-                      Premium_ZRS, StandardSSD_LRS or UltraSSD_LRS.
+                      PremiumV2_LRS, Premium_ZRS, StandardSSD_LRS or UltraSSD_LRS.
                     type: string
                   tags:
                     additionalProperties:

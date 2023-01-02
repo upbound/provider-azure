@@ -242,7 +242,7 @@ spec:
                   sslMinimalTlsVersionEnforced:
                     description: The minimum TLS version to support on the sever.
                       Possible values are TLSEnforcementDisabled, TLS1_0, TLS1_1,
-                      and TLS1_2. Defaults to TLSEnforcementDisabled.
+                      and TLS1_2. Defaults to TLS1_2.
                     type: string
                   storageMb:
                     description: Max storage allowed for a server. Possible values

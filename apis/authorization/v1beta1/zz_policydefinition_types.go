@@ -17,6 +17,9 @@ type PolicyDefinitionObservation struct {
 
 	// The ID of the Policy Definition.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A list of role definition id extracted from policy_rule required for remediation.
+	RoleDefinitionIds []*string `json:"roleDefinitionIds,omitempty" tf:"role_definition_ids,omitempty"`
 }
 
 type PolicyDefinitionParameters struct {
@@ -39,8 +42,7 @@ type PolicyDefinitionParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// The policy mode that allows you to specify which resource
-	// types will be evaluated. Possible values are All, Indexed, Microsoft.ContainerService.Data, Microsoft.CustomerLockbox.Data, Microsoft.DataCatalog.Data, Microsoft.KeyVault.Data, Microsoft.Kubernetes.Data, Microsoft.MachineLearningServices.Data, Microsoft.Network.Data and Microsoft.Synapse.Data.
+	// The policy resource manager mode that allows you to specify which resource types will be evaluated. Possible values are All or Indexed.
 	// +kubebuilder:validation:Required
 	Mode *string `json:"mode" tf:"mode,omitempty"`
 

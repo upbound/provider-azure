@@ -71,6 +71,7 @@ type WebhookParameters struct {
 	// +kubebuilder:validation:Optional
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// A mapping of tags to assign to the resource.
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }

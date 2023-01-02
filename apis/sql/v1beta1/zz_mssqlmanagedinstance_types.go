@@ -56,7 +56,7 @@ type MSSQLManagedInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Collation *string `json:"collation,omitempty" tf:"collation,omitempty"`
 
-	// The ID of the SQL Managed Instance which will share the DNS zone. This is a prerequisite for creating an azurerm_managed_instance_failover_group. Setting this after creation forces a new resource to be created.
+	// The ID of the SQL Managed Instance which will share the DNS zone. This is a prerequisite for creating an azurerm_sql_managed_instance_failover_group. Setting this after creation forces a new resource to be created.
 	// +crossplane:generate:reference:type=MSSQLManagedInstance
 	// +crossplane:generate:reference:extractor=github.com/upbound/provider-azure/apis/rconfig.ExtractResourceID()
 	// +kubebuilder:validation:Optional
@@ -111,7 +111,7 @@ type MSSQLManagedInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ResourceGroupNameSelector *v1.Selector `json:"resourceGroupNameSelector,omitempty" tf:"-"`
 
-	// Specifies the SKU Name for the SQL Managed Instance. Valid values include GP_Gen4, GP_Gen5, GP_G8IM, GP_G8IH, BC_Gen4, BC_Gen5, BC_G8IM or BC_G8IH.
+	// Specifies the SKU Name for the SQL Managed Instance. Valid values include GP_Gen4, GP_Gen5, GP_Gen8IM, GP_Gen8IH, BC_Gen4, BC_Gen5, BC_Gen8IM or BC_Gen8IH.
 	// +kubebuilder:validation:Required
 	SkuName *string `json:"skuName" tf:"sku_name,omitempty"`
 

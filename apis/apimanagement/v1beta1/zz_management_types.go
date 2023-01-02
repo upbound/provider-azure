@@ -31,6 +31,10 @@ type AdditionalLocationParameters struct {
 	// +kubebuilder:validation:Optional
 	Capacity *float64 `json:"capacity,omitempty" tf:"capacity,omitempty"`
 
+	// Only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in this additional location.
+	// +kubebuilder:validation:Optional
+	GatewayDisabled *bool `json:"gatewayDisabled,omitempty" tf:"gateway_disabled,omitempty"`
+
 	// The name of the Azure Region in which the API Management Service should be expanded to.
 	// +kubebuilder:validation:Required
 	Location *string `json:"location" tf:"location,omitempty"`
@@ -77,6 +81,12 @@ type CertificateParameters struct {
 
 type DeveloperPortalObservation struct {
 
+	// The source of the certificate.
+	CertificateSource *string `json:"certificateSource,omitempty" tf:"certificate_source,omitempty"`
+
+	// The status of the certificate.
+	CertificateStatus *string `json:"certificateStatus,omitempty" tf:"certificate_status,omitempty"`
+
 	// The expiration date of the certificate in RFC3339 format: 2000-01-02T03:04:05Z.
 	Expiry *string `json:"expiry,omitempty" tf:"expiry,omitempty"`
 
@@ -103,6 +113,12 @@ type DeveloperPortalParameters struct {
 }
 
 type HostNameConfigurationManagementObservation struct {
+
+	// The source of the certificate.
+	CertificateSource *string `json:"certificateSource,omitempty" tf:"certificate_source,omitempty"`
+
+	// The status of the certificate.
+	CertificateStatus *string `json:"certificateStatus,omitempty" tf:"certificate_status,omitempty"`
 
 	// The expiration date of the certificate in RFC3339 format: 2000-01-02T03:04:05Z.
 	Expiry *string `json:"expiry,omitempty" tf:"expiry,omitempty"`
@@ -363,6 +379,12 @@ type PolicyParameters struct {
 
 type PortalObservation struct {
 
+	// The source of the certificate.
+	CertificateSource *string `json:"certificateSource,omitempty" tf:"certificate_source,omitempty"`
+
+	// The status of the certificate.
+	CertificateStatus *string `json:"certificateStatus,omitempty" tf:"certificate_status,omitempty"`
+
 	// The expiration date of the certificate in RFC3339 format: 2000-01-02T03:04:05Z.
 	Expiry *string `json:"expiry,omitempty" tf:"expiry,omitempty"`
 
@@ -400,6 +422,12 @@ type ProtocolsParameters struct {
 
 type ProxyObservation struct {
 
+	// The source of the certificate.
+	CertificateSource *string `json:"certificateSource,omitempty" tf:"certificate_source,omitempty"`
+
+	// The status of the certificate.
+	CertificateStatus *string `json:"certificateStatus,omitempty" tf:"certificate_status,omitempty"`
+
 	// Is the certificate associated with this Hostname the Default SSL Certificate? This is used when an SNI header isn't specified by a client. Defaults to false.
 	DefaultSSLBinding *bool `json:"defaultSslBinding,omitempty" tf:"default_ssl_binding,omitempty"`
 
@@ -429,6 +457,12 @@ type ProxyParameters struct {
 }
 
 type ScmObservation struct {
+
+	// The source of the certificate.
+	CertificateSource *string `json:"certificateSource,omitempty" tf:"certificate_source,omitempty"`
+
+	// The status of the certificate.
+	CertificateStatus *string `json:"certificateStatus,omitempty" tf:"certificate_status,omitempty"`
 
 	// The expiration date of the certificate in RFC3339 format: 2000-01-02T03:04:05Z.
 	Expiry *string `json:"expiry,omitempty" tf:"expiry,omitempty"`

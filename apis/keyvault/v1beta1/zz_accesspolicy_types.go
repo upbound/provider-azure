@@ -29,7 +29,7 @@ type AccessPolicyParameters_2 struct {
 	// +kubebuilder:validation:Optional
 	CertificatePermissions []*string `json:"certificatePermissions,omitempty" tf:"certificate_permissions,omitempty"`
 
-	// List of key permissions, must be one or more from the following: Backup, Create, Decrypt, Delete, Encrypt, Get, Import, List, Purge, Recover, Restore, Sign, UnwrapKey, Update, Verify and WrapKey.
+	// List of key permissions, must be one or more from the following: Backup, Create, Decrypt, Delete, Encrypt, Get, Import, List, Purge, Recover, Restore, Sign, UnwrapKey, Update, Verify, WrapKey, Release, Rotate, GetRotationPolicy, and SetRotationPolicy.
 	// +kubebuilder:validation:Optional
 	KeyPermissions []*string `json:"keyPermissions,omitempty" tf:"key_permissions,omitempty"`
 

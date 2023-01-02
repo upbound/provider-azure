@@ -122,6 +122,10 @@ type VaultParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkAcls []NetworkAclsParameters `json:"networkAcls,omitempty" tf:"network_acls,omitempty"`
 
+	// Whether public network access is allowed for this Key Vault. Defaults to true.
+	// +kubebuilder:validation:Optional
+	PublicNetworkAccessEnabled *bool `json:"publicNetworkAccessEnabled,omitempty" tf:"public_network_access_enabled,omitempty"`
+
 	// Is Purge Protection enabled for this Key Vault? Defaults to false.
 	// +kubebuilder:validation:Optional
 	PurgeProtectionEnabled *bool `json:"purgeProtectionEnabled,omitempty" tf:"purge_protection_enabled,omitempty"`

@@ -67,6 +67,10 @@ type PrivateLinkServiceParameters struct {
 	// +kubebuilder:validation:Optional
 	EnableProxyProtocol *bool `json:"enableProxyProtocol,omitempty" tf:"enable_proxy_protocol,omitempty"`
 
+	// List of FQDNs allowed for the Private Link Service.
+	// +kubebuilder:validation:Optional
+	Fqdns []*string `json:"fqdns,omitempty" tf:"fqdns,omitempty"`
+
 	// A list of Frontend IP Configuration IDs from a Standard Load Balancer, where traffic from the Private Link Service should be routed. You can use Load Balancer Rules to direct this traffic to appropriate backend pools where your applications are running.
 	// +kubebuilder:validation:Required
 	LoadBalancerFrontendIPConfigurationIds []*string `json:"loadBalancerFrontendIpConfigurationIds" tf:"load_balancer_frontend_ip_configuration_ids,omitempty"`

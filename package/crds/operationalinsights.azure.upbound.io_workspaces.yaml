@@ -64,6 +64,9 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  cmkForQueryForced:
+                    description: Is Customer Managed Storage mandatory for query management?
+                    type: boolean
                   dailyQuotaGb:
                     description: The workspace daily quota for ingestion in GB.  Defaults
                       to -1 (unlimited) if omitted.
@@ -71,7 +74,7 @@ spec:
                   internetIngestionEnabled:
                     type: boolean
                   internetQueryEnabled:
-                    description: Should the Log Analytics Workflow support querying
+                    description: Should the Log Analytics Workspace support querying
                       over the Public Internet? Defaults to true.
                     type: boolean
                   location:

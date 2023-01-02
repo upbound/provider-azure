@@ -99,7 +99,11 @@ type FirewallPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	ResourceGroupNameSelector *v1.Selector `json:"resourceGroupNameSelector,omitempty" tf:"-"`
 
-	// The SKU Tier of the Firewall Policy. Possible values are Standard, Premium. Changing this forces a new Firewall Policy to be created.
+	// Whether SQL Redirect traffic filtering is allowed. Enabling this flag requires no rule using ports between 11000-11999.
+	// +kubebuilder:validation:Optional
+	SQLRedirectAllowed *bool `json:"sqlRedirectAllowed,omitempty" tf:"sql_redirect_allowed,omitempty"`
+
+	// The SKU Tier of the Firewall Policy. Possible values are Standard, Premium and Basic. Changing this forces a new Firewall Policy to be created.
 	// +kubebuilder:validation:Optional
 	Sku *string `json:"sku,omitempty" tf:"sku,omitempty"`
 
@@ -150,6 +154,10 @@ type IntrusionDetectionParameters struct {
 	// In which mode you want to run intrusion detection: Off, Alert or Deny.
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// A list of Private IP address ranges to identify traffic direction. By default, only ranges defined by IANA RFC 1918 are considered private IP addresses.
+	// +kubebuilder:validation:Optional
+	PrivateRanges []*string `json:"privateRanges,omitempty" tf:"private_ranges,omitempty"`
 
 	// One or more signature_overrides blocks as defined below.
 	// +kubebuilder:validation:Optional

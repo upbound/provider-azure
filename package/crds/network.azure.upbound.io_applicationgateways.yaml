@@ -165,7 +165,7 @@ spec:
                                   3600 seconds.
                                 type: number
                               enabled:
-                                description: Is the Web Application Firewall be enabled?
+                                description: Is the Web Application Firewall enabled?
                                 type: boolean
                             required:
                             - drainTimeoutSec
@@ -205,7 +205,7 @@ spec:
                           type: string
                         requestTimeout:
                           description: The request timeout in seconds, which must
-                            be between 1 and 86400 seconds.
+                            be between 1 and 86400 seconds. Defaults to 30.
                           type: number
                         trustedRootCertificateNames:
                           description: A list of trusted_root_certificate names.
@@ -546,6 +546,23 @@ spec:
                       - name
                       type: object
                     type: array
+                  global:
+                    description: A global block as defined below.
+                    items:
+                      properties:
+                        requestBufferingEnabled:
+                          description: Whether Application Gateway's Request buffer
+                            is enabled.
+                          type: boolean
+                        responseBufferingEnabled:
+                          description: Whether Application Gateway's Response buffer
+                            is enabled.
+                          type: boolean
+                      required:
+                      - requestBufferingEnabled
+                      - responseBufferingEnabled
+                      type: object
+                    type: array
                   httpListener:
                     description: One or more http_listener blocks as defined below.
                     items:
@@ -792,7 +809,6 @@ spec:
                                   type: string
                                 type: array
                             required:
-                            - body
                             - statusCode
                             type: object
                           type: array
@@ -830,7 +846,7 @@ spec:
                           description: The Unhealthy Threshold for this Probe, which
                             indicates the amount of retries which should be attempted
                             before a node is deemed unhealthy. Possible values are
-                            from 1 - 20 seconds.
+                            from 1 to 20.
                           type: number
                       required:
                       - interval
@@ -1091,6 +1107,12 @@ spec:
                                 description: One url block as defined above
                                 items:
                                   properties:
+                                    components:
+                                      description: The components used to rewrite
+                                        the URL. Possible values are path_only and
+                                        query_string_only to limit the rewrite to
+                                        the URL Path or URL Query String only.
+                                      type: string
                                     path:
                                       description: The URL path to rewrite.
                                       type: string
@@ -1492,7 +1514,7 @@ spec:
                             type: object
                           type: array
                         enabled:
-                          description: Is the Web Application Firewall be enabled?
+                          description: Is the Web Application Firewall enabled?
                           type: boolean
                         exclusion:
                           description: one or more exclusion blocks as defined below.

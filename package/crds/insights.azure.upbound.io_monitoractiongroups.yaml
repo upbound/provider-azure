@@ -203,9 +203,20 @@ spec:
                         eventHubId:
                           description: The resource ID of the respective Event Hub.
                           type: string
+                        eventHubName:
+                          description: The name of the specific Event Hub queue.
+                          type: string
+                        eventHubNamespace:
+                          description: The namespace name of the Event Hub.
+                          type: string
                         name:
                           description: The name of the Action Group. Changing this
                             forces a new resource to be created.
+                          type: string
+                        subscriptionId:
+                          description: The ID for the subscription containing this
+                            Event Hub. Default to the subscription ID of the Action
+                            Group.
                           type: string
                         tenantId:
                           description: The Tenant ID for the subscription containing
@@ -215,7 +226,6 @@ spec:
                           description: Enables or disables the common alert schema.
                           type: boolean
                       required:
-                      - eventHubId
                       - name
                       type: object
                     type: array

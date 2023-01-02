@@ -64,6 +64,10 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  authenticationMode:
+                    description: The authentication mode for the Stream Output. Possible
+                      values are Msi and ConnectionString. Defaults to ConnectionString.
+                    type: string
                   batchMaxWaitTime:
                     description: The maximum wait time per batch in hh:mm:ss e.g.
                       00:02:00 for two minutes.
@@ -370,7 +374,6 @@ spec:
                 - dateFormat
                 - pathPattern
                 - serialization
-                - storageAccountKeySecretRef
                 - streamAnalyticsJobName
                 - timeFormat
                 type: object
