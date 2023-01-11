@@ -66,6 +66,8 @@ import (
 	redislinkedserver "github.com/upbound/provider-azure/internal/controller/cache/redislinkedserver"
 	endpoint "github.com/upbound/provider-azure/internal/controller/cdn/endpoint"
 	profile "github.com/upbound/provider-azure/internal/controller/cdn/profile"
+	accountcognitiveservices "github.com/upbound/provider-azure/internal/controller/cognitiveservices/account"
+	accountcustomermanagedkey "github.com/upbound/provider-azure/internal/controller/cognitiveservices/accountcustomermanagedkey"
 	service "github.com/upbound/provider-azure/internal/controller/communication/service"
 	availabilityset "github.com/upbound/provider-azure/internal/controller/compute/availabilityset"
 	dedicatedhost "github.com/upbound/provider-azure/internal/controller/compute/dedicatedhost"
@@ -382,6 +384,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		redislinkedserver.Setup,
 		endpoint.Setup,
 		profile.Setup,
+		accountcognitiveservices.Setup,
+		accountcustomermanagedkey.Setup,
 		service.Setup,
 		availabilityset.Setup,
 		dedicatedhost.Setup,
