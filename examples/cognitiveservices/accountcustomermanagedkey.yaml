@@ -1,0 +1,102 @@
+apiVersion: cognitiveservices.azure.upbound.io/v1beta1
+kind: AccountCustomerManagedKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cognitiveservices/v1beta1/accountcustomermanagedkey
+    upjet.upbound.io/manual-intervention: "Requires three different Access Policies for key, user and Cognitive account, can not be automated"
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    cognitiveAccountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exampleaccount
+    identityClientId: ${azurerm_user_assigned_identity.example.client_id}
+    keyVaultKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: examplevlt
+
+---
+
+apiVersion: cognitiveservices.azure.upbound.io/v1beta1
+kind: Account
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cognitiveservices/v1beta1/accountcustomermanagedkey
+    upjet.upbound.io/manual-intervention: "Requires three different Access Policies for key, user and Cognitive account, can not be automated"
+  labels:
+    testing.upbound.io/example-name: exampleaccount
+  name: exampleaccount
+spec:
+  forProvider:
+    kind: Face
+    location: West Europe
+    resourceGroupNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: examplecognrg
+    skuName: S0
+    tags:
+      Acceptance: Test
+
+---
+
+apiVersion: keyvault.azure.upbound.io/v1beta1
+kind: Vault
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cognitiveservices/v1beta1/accountcustomermanagedkey
+    upjet.upbound.io/manual-intervention: "Requires three different Access Policies for key, user and Cognitive account, can not be automated"
+  labels:
+    testing.upbound.io/example-name: examplevlt
+  name: examplevlt
+spec:
+  forProvider:
+    location: West US
+    purgeProtectionEnabled: true
+    resourceGroupNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: examplecognrg
+    skuName: standard
+    tenantId: "${data.azurerm_client_config.current.tenant_id}"
+
+---
+
+apiVersion: keyvault.azure.upbound.io/v1beta1
+kind: Key
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cognitiveservices/v1beta1/accountcustomermanagedkey
+    upjet.upbound.io/manual-intervention: "Requires three different Access Policies for key, user and Cognitive account, can not be automated"
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    keyOpts:
+    - decrypt
+    - encrypt
+    - sign
+    - unwrapKey
+    - verify
+    - wrapKey
+    keySize: 2048
+    keyType: RSA
+    keyVaultIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: examplevlt
+
+---
+
+apiVersion: azure.upbound.io/v1beta1
+kind: ResourceGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cognitiveservices/v1beta1/accountcustomermanagedkey
+    upjet.upbound.io/manual-intervention: "Requires three different Access Policies for key, user and Cognitive account, can not be automated"
+  labels:
+    testing.upbound.io/example-name: examplecognrg
+  name: examplecognrg
+spec:
+  forProvider:
+    location: West US
